@@ -95,5 +95,4 @@ Backend:  render.com → MongoDB Atlas
 
 ---
 
-*Happy Coding! Keep Building 🚀*
-```
+
