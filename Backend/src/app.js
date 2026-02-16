@@ -24,7 +24,7 @@ app.post("/notes", async (req, res) => {
   });
 });
 
-app.get("/api/notes", async (req, res) => {
+app.get("/notes", async (req, res) => {
   const notes = await noteModel.find();
 
   res.status(200).json({
@@ -33,7 +33,7 @@ app.get("/api/notes", async (req, res) => {
   });
 });
 
-app.delete("/api/notes/:id", async (req, res) => {
+app.delete("/notes/:id", async (req, res) => {
   const id = req.params.id;
   console.log(req.params.id);
   if (await noteModel.findById(id)) {
