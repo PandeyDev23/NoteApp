@@ -3,13 +3,12 @@ const noteModel = require("./models/note.model");
 const cors = require("cors");
 const path = require("path");
 
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static("./public"))
+app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
   res.send("working as fine as wine");
@@ -37,33 +36,33 @@ app.get("/notes", async (req, res) => {
   });
 });
 
-app.patch("/notes/title/:id", async(req, res) => {
+app.patch("/notes/title/:id", async (req, res) => {
   // console.log(req.params.id);
   const { title } = req.body;
 
-  const note =  await noteModel.findById(req.params.id)
-  console.log(note)
+  const note = await noteModel.findById(req.params.id);
+  console.log(note);
 
-  note.title = title
-  await note.save()
-  res.json(note)
+  note.title = title;
+  await note.save();
+  res.json(note);
 });
 
-app.patch("/notes/content/:id", async(req,res)=>{
-  const {Content} = req.body
+app.patch("/notes/content/:id", async (req, res) => {
+  const { Content } = req.body;
 
-  const note = await noteModel.findByIdAndUpdate(req.params.id,{
-    Content : Content
-  },
-  { returnDocument: 'after' }
-)
-res.status(201).json({
-  message: "Content updated successfully",
-  note
-})
-})
-
-
+  const note = await noteModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      Content: Content,
+    },
+    { returnDocument: "after" },
+  );
+  res.status(201).json({
+    message: "Content updated successfully",
+    note,
+  });
+});
 
 app.delete("/notes/:id", async (req, res) => {
   const id = req.params.id;
@@ -79,6 +78,10 @@ app.delete("/notes/:id", async (req, res) => {
       message: "Note not found",
     });
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 module.exports = app;
