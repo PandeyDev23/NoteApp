@@ -6,7 +6,7 @@ const App = () => {
 
   function fetchNotes() {
     axios
-      .get("http://localhost:3000/notes")
+      .get("https://noteapp-trmv.onrender.com/notes")
       .then((res) => {
         setNotes(res.data.notes || []);
       })
@@ -22,14 +22,13 @@ const App = () => {
 
   function postNote(title, Content) {
     axios
-      .post("http://localhost:3000/notes", {
+      .post("https://noteapp-trmv.onrender.com/notes", {
         title: title,
         Content: Content,
       })
       .then((res) => {
         console.log(res.data);
-        setNotes(prev => [res.data.note, ...prev])
-
+        setNotes((prev) => [res.data.note, ...prev]);
       });
   }
 
@@ -45,12 +44,13 @@ const App = () => {
     }
   }
 
-  function handleDelete(noteId){
-    axios.delete(`http://localhost:3000/notes/${noteId}`)
-    .then((res)=>{
-      console.log(res.data);
-      setNotes(prev => prev.filter(note => note._id !== noteId))
-    })
+  function handleDelete(noteId) {
+    axios
+      .delete(`https://noteapp-trmv.onrender.com/notes/${noteId}`)
+      .then((res) => {
+        console.log(res.data);
+        setNotes((prev) => prev.filter((note) => note._id !== noteId));
+      });
   }
 
   return (
@@ -83,7 +83,19 @@ const App = () => {
     m-1.5"
             key={note._id}
           >
-          <span className="absolute right-2 top-2 cursor-pointer text-red-400 font-code" onClick={()=>handleDelete(note._id)}> DEL</span>
+            <span
+              className="absolute right-2 top-2 cursor-pointer text-red-400 font-code"
+              onClick={() => handleDelete(note._id)}
+            >
+              {" "}
+              DEL
+            </span>
+            <span
+              className="absolute bottom-0 cursor-pointer text-blue-400 font-code text-3xl"
+              onClick={() => handleEdit(note._id)}
+            >
+              ✐
+            </span>
             <h1 className="text-gray-300">{note.title}</h1>
             <p className="text-gray-400">{note.Content}</p>
           </div>
